@@ -9,6 +9,7 @@ import MovieOutline from 'vue-material-design-icons/MovieOutline.vue'
 import Plus from 'vue-material-design-icons/Plus.vue'
 import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
 import MovieDetails from "./components/MovieDetails.vue";
+import VideoCarousel from "./components/VideoCarousel.vue";
 
 import {useMovieStore} from './stores/movie'
 import {storeToRefs} from "pinia";
@@ -17,8 +18,8 @@ const useMovie = useMovieStore();
 
 const {movie, showFullVideo} = storeToRefs(useMovie)
 
-onMounted(()=>{
-  setTimeout(()=> movie.value = movies[0][0], 100)
+onMounted(() => {
+  setTimeout(() => movie.value = movies[0][0], 100)
 })
 
 
@@ -27,44 +28,47 @@ onMounted(()=>{
 <template>
   <div class="fixed w-full h-screen bg-black">
     <div v-if="!showFullVideo" id="SideNav" class="flex z-40 items-center w-[120px] h-screen bg-black relative">
-      <img class="absolute top-0 w-[35px] mt-10 ml-10" src="/images/netflix-logo.png" >
+      <img class="absolute top-0 w-[35px] mt-10 ml-10" src="/images/netflix-logo.png">
       <div class="">
         <div class="py-2 mx-10 my-6">
-          <Magnify fill-color="#fff" :size="40" class="cursor-pointer" />
+          <Magnify fill-color="#fff" :size="40" class="cursor-pointer"/>
         </div>
         <div class="py-2 mx-10 my-6 border-b-4 border-b-red-500">
-          <HomeOutline fill-color="#fff" :size="40" class="cursor-pointer" />
+          <HomeOutline fill-color="#fff" :size="40" class="cursor-pointer"/>
         </div>
         <div class="py-2 mx-10 my-6">
-          <TrendingUp fill-color="#fff" :size="40" class="cursor-pointer" />
+          <TrendingUp fill-color="#fff" :size="40" class="cursor-pointer"/>
         </div>
         <div class="py-2 mx-10 my-6">
-          <Television fill-color="#fff" :size="40" class="cursor-pointer" />
+          <Television fill-color="#fff" :size="40" class="cursor-pointer"/>
         </div>
         <div class="py-2 mx-10 my-6">
-          <MovieOutline fill-color="#fff" :size="40" class="cursor-pointer" />
+          <MovieOutline fill-color="#fff" :size="40" class="cursor-pointer"/>
         </div>
         <div class="py-2 mx-10 my-6">
-          <Plus fill-color="#fff" :size="40" class="cursor-pointer" />
+          <Plus fill-color="#fff" :size="40" class="cursor-pointer"/>
         </div>
       </div>
     </div>
     <div v-if="!showFullVideo">
       <div class="fixed flex z-20 top-0 right-0 w-full h-[50%] bg-black pl-[120px] bg-clip-border">
-        <MovieDetails v-if="movie" :movie="movie" />
+        <MovieDetails v-if="movie" :movie="movie"/>
         <video v-if="movie"
                :src="'/videos/'+ movie.name+'.mp4'"
                class="absolute top-0 right-0 z-0 h-[600px]"
                autoplay
                loop
-
-
         />
+      </div>
+      <div class="fixed z-30 bottom-0 right-0 w-full h-[55%] pl-[120px] overflow-y-auto">
+        <VideoCarousel class="py-14" category="Populer Movies" :movies="movies[0]"/>
+        <VideoCarousel class="pb-14" category="Horror Movies" :movies="movies[1]"/>
+        <VideoCarousel class="pb-32" category="Featured Movies" :movies="movies[2]"/>
+
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
 
-</style>
+
